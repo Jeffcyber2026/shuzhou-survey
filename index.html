@@ -16,7 +16,6 @@
     --rust: #8b3a0f;
     --mist: #7a6e5e;
     --seal: #c0392b;
-    --green: #2e7d32;
     --line: rgba(100,80,40,0.18);
     --shadow: rgba(60,30,5,0.12);
   }
@@ -265,68 +264,6 @@
     max-width: 300px; text-align: center; margin-bottom: 32px;
   }
 
-  /* ── 投票统计区 ── */
-  .vote-board {
-    width: 100%; max-width: 340px;
-    background: var(--paper-deep);
-    border: 1.5px solid rgba(120,90,40,0.22);
-    border-radius: 6px;
-    padding: 20px 20px 16px;
-    margin-bottom: 24px;
-  }
-  .vote-board-title {
-    font-size: 13px; letter-spacing: 2px;
-    color: var(--mist); text-align: center; margin-bottom: 16px;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .vote-board-title::before,
-  .vote-board-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
-
-  .vote-row { margin-bottom: 13px; }
-  .vote-row:last-child { margin-bottom: 0; }
-
-  .vote-label {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 5px;
-  }
-  .vote-label-text { font-size: 13px; color: var(--ink); }
-  .vote-pct {
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 18px; line-height: 1;
-  }
-  .pct-yes   { color: var(--green); }
-  .pct-maybe { color: var(--amber); }
-  .pct-no    { color: var(--mist);  }
-
-  .vote-bar-bg {
-    height: 8px; background: rgba(120,90,40,0.12);
-    border-radius: 4px; overflow: hidden;
-  }
-  .vote-bar-fill {
-    height: 100%; border-radius: 4px;
-    width: 0%;
-    transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
-  }
-  .fill-yes   { background: linear-gradient(90deg, #43a047, #66bb6a); }
-  .fill-maybe { background: linear-gradient(90deg, var(--amber), var(--amber-light)); }
-  .fill-no    { background: linear-gradient(90deg, #9e9e9e, #bdbdbd); }
-
-  .vote-total {
-    text-align: center; margin-top: 14px;
-    font-size: 12px; color: var(--mist); letter-spacing: 1px;
-  }
-  .vote-total strong { color: var(--amber); font-size: 14px; }
-
-  .vote-loading {
-    text-align: center; padding: 18px 0;
-    font-size: 13px; color: var(--mist); letter-spacing: 1px;
-    animation: pulse 1.4s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity: 1; }
-    50%      { opacity: 0.4; }
-  }
-
   .success-name {
     margin-top: 8px; font-size: 13px;
     color: rgba(120,90,40,0.5); letter-spacing: 2px;
@@ -464,7 +401,7 @@
 
       <div class="submit-wrap">
         <button class="btn-submit" id="submitBtn" onclick="submitForm()">提交问卷</button>
-        <div class="hint-text">感谢您的参与 · 提交后可查看实时投票结果</div>
+        <div class="hint-text">感谢您的参与 · 数据仅供产品规划参考</div>
       </div>
     </div>
   </div>
@@ -477,43 +414,9 @@
     </div>
     <div class="success-title">感谢您的反馈</div>
     <div class="success-desc">
-      您的意见已收到！来看看大家的购买意愿吧 👇<br>
+      您的意见已收到！<br>
       关注「书宙漫游」第一时间获取上架通知 📚
     </div>
-
-    <!-- 实时投票统计 -->
-    <div class="vote-board" id="voteBoard">
-      <div class="vote-board-title">实时投票结果</div>
-      <div class="vote-loading" id="voteLoading">正在加载数据…</div>
-      <div id="voteData" style="display:none;">
-        <!-- yes -->
-        <div class="vote-row">
-          <div class="vote-label">
-            <span class="vote-label-text">✅ 愿意购买</span>
-            <span class="vote-pct pct-yes" id="pctYes">0%</span>
-          </div>
-          <div class="vote-bar-bg"><div class="vote-bar-fill fill-yes" id="barYes"></div></div>
-        </div>
-        <!-- maybe -->
-        <div class="vote-row">
-          <div class="vote-label">
-            <span class="vote-label-text">🤔 有兴趣，再了解</span>
-            <span class="vote-pct pct-maybe" id="pctMaybe">0%</span>
-          </div>
-          <div class="vote-bar-bg"><div class="vote-bar-fill fill-maybe" id="barMaybe"></div></div>
-        </div>
-        <!-- no -->
-        <div class="vote-row">
-          <div class="vote-label">
-            <span class="vote-label-text">❌ 暂不考虑</span>
-            <span class="vote-pct pct-no" id="pctNo">0%</span>
-          </div>
-          <div class="vote-bar-bg"><div class="vote-bar-fill fill-no" id="barNo"></div></div>
-        </div>
-        <div class="vote-total">共 <strong id="totalVotes">0</strong> 人参与投票</div>
-      </div>
-    </div>
-
     <div class="success-name">— 书宙漫游 —</div>
   </div>
 
@@ -521,107 +424,52 @@
 </div>
 
 <script>
-  // ── CountAPI 命名空间（用仓库名隔离，避免与他人冲突）
-  const NS   = 'shuzhou-survey-2026';
-  const KEYS = { yes: 'q1-yes', maybe: 'q1-maybe', no: 'q1-no' };
-
-  // CountAPI 封装 —— 使用 api.countapi.xyz
-  function countHit(key) {
-    return fetch(`https://api.countapi.xyz/hit/${NS}/${key}`)
-      .then(r => r.json()).catch(() => ({ value: null }));
-  }
-  function countGet(key) {
-    return fetch(`https://api.countapi.xyz/get/${NS}/${key}`)
-      .then(r => r.json()).catch(() => ({ value: null }));
-  }
-
   // ── 单选 / 多选
   function selectRadio(el) {
     const g = el.dataset.group;
-    document.querySelectorAll(`[data-group="${g}"]`).forEach(i => i.classList.remove('selected'));
+    document.querySelectorAll('[data-group="' + g + '"]').forEach(function(i) { i.classList.remove('selected'); });
     el.classList.add('selected');
   }
   function selectCheck(el) { el.classList.toggle('selected'); }
 
   // ── 提交
-  async function submitForm() {
-    const q1el = document.querySelector('#q1 .selected');
-    const q4el = document.querySelector('#q4 .selected');
+  function submitForm() {
+    var q1el = document.querySelector('#q1 .selected');
+    var q4el = document.querySelector('#q4 .selected');
     if (!q1el) { showToast('请回答第 1 题'); document.getElementById('q1').scrollIntoView({behavior:'smooth',block:'center'}); return; }
     if (!q4el) { showToast('请回答第 4 题'); document.getElementById('q4').scrollIntoView({behavior:'smooth',block:'center'}); return; }
 
-    const btn = document.getElementById('submitBtn');
+    var btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = '提交中…';
 
-    const choice = q1el.dataset.val; // yes / maybe / no
-
-    // 写入计数
-    await countHit(KEYS[choice]);
+    // 收集数据（控制台输出，可对接后端）
+    var formData = {
+      q1: q1el ? q1el.dataset.val : '',
+      q2: Array.from(document.querySelectorAll('#q2 .selected')).map(function(i) { return i.dataset.val; }),
+      q3: Array.from(document.querySelectorAll('#q3 .selected')).map(function(i) { return i.dataset.val; }),
+      q4: q4el ? q4el.dataset.val : '',
+      comment: document.getElementById('comment').value
+    };
+    console.log('问卷提交:', JSON.stringify(formData, null, 2));
 
     // 切换成功页
-    document.getElementById('formView').style.display = 'none';
-    const sv = document.getElementById('successView');
-    sv.style.display = 'flex'; sv.classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // 加载所有数据
-    loadVoteStats();
-  }
-
-  // ── 加载并渲染统计
-  async function loadVoteStats() {
-    try {
-      const [rYes, rMaybe, rNo] = await Promise.all([
-        countGet(KEYS.yes),
-        countGet(KEYS.maybe),
-        countGet(KEYS.no)
-      ]);
-
-      const yes   = Math.max(0, rYes.value   || 0);
-      const maybe = Math.max(0, rMaybe.value || 0);
-      const no    = Math.max(0, rNo.value    || 0);
-      const total = yes + maybe + no;
-
-      document.getElementById('voteLoading').style.display = 'none';
-      document.getElementById('voteData').style.display    = 'block';
-      document.getElementById('totalVotes').textContent = total;
-
-      const pct = (n) => total === 0 ? '0%' : Math.round(n / total * 100) + '%';
-      const w   = (n) => total === 0 ? '0%' : (n / total * 100).toFixed(1) + '%';
-
-      document.getElementById('pctYes').textContent   = pct(yes);
-      document.getElementById('pctMaybe').textContent = pct(maybe);
-      document.getElementById('pctNo').textContent    = pct(no);
-
-      // 延迟触发动画
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          document.getElementById('barYes').style.width   = w(yes);
-          document.getElementById('barMaybe').style.width = w(maybe);
-          document.getElementById('barNo').style.width    = w(no);
-        }, 100);
-      });
-    } catch (e) {
-      document.getElementById('voteLoading').textContent = '数据加载失败，请稍后刷新查看';
-    }
+    setTimeout(function() {
+      document.getElementById('formView').style.display = 'none';
+      var sv = document.getElementById('successView');
+      sv.style.display = 'flex'; sv.classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 500);
   }
 
   // ── Toast
   function showToast(msg) {
-    const old = document.getElementById('toast');
+    var old = document.getElementById('toast');
     if (old) old.remove();
-    const t = document.createElement('div');
+    var t = document.createElement('div');
     t.id = 'toast'; t.textContent = msg;
-    Object.assign(t.style, {
-      position:'fixed', bottom:'40px', left:'50%',
-      transform:'translateX(-50%)',
-      background:'rgba(26,18,8,0.88)', color:'#e8a822',
-      padding:'10px 20px', borderRadius:'4px',
-      fontSize:'13px', letterSpacing:'1px',
-      zIndex:999, whiteSpace:'nowrap'
-    });
+    t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(26,18,8,0.88);color:#e8a822;padding:10px 20px;border-radius:4px;font-size:13px;letter-spacing:1px;z-index:999;white-space:nowrap;';
     document.body.appendChild(t);
-    setTimeout(() => t.remove(), 2200);
+    setTimeout(function() { t.remove(); }, 2200);
   }
 </script>
 </body>
