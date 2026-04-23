@@ -1,476 +1,773 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>书宙漫游 · 电子书合集意愿调查</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #1a1208;
-    --paper: #fdf6e3;
-    --paper-deep: #f5ead0;
-    --amber: #c8860a;
-    --amber-light: #e8a822;
-    --rust: #8b3a0f;
-    --mist: #7a6e5e;
-    --seal: #c0392b;
-    --line: rgba(100,80,40,0.18);
-    --shadow: rgba(60,30,5,0.12);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📚 书宙漫游 · PDF电子书合集 · 付费意愿调查</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #1557b0;
+            --bg: #f8f9fc;
+            --card: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --yes-color: #10b981;
+            --no-color: #ef4444;
+            --abstain-color: #6b7280;
+            --bar-bg: #e5e7eb;
+            --radius: 14px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html, body {
-    min-height: 100vh;
-    background-color: var(--paper);
-    background-image:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 29px,
-        var(--line) 29px,
-        var(--line) 30px
-      );
-    font-family: 'Noto Serif SC', serif;
-    color: var(--ink);
-    -webkit-font-smoothing: antialiased;
-  }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 16px;
+        }
 
-  .page-wrap {
-    max-width: 600px;
-    margin: 0 auto;
-    min-height: 100vh;
-    background: var(--paper);
-    position: relative;
-    box-shadow: 0 0 40px var(--shadow);
-  }
+        .container {
+            width: 100%;
+            max-width: 520px;
+            padding: 0 0 40px;
+        }
 
-  /* ── 顶部 ── */
-  .header-band {
-    background: var(--ink);
-    padding: 28px 24px 22px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header-band::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--amber), var(--amber-light), var(--amber));
-  }
-  .header-band::after {
-    content: '書';
-    position: absolute;
-    right: -10px; top: -20px;
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 160px;
-    color: rgba(255,255,255,0.04);
-    line-height: 1;
-    pointer-events: none;
-  }
-  .badge {
-    display: inline-block;
-    background: var(--amber);
-    color: #fff;
-    font-size: 11px;
-    letter-spacing: 2px;
-    padding: 3px 10px;
-    border-radius: 2px;
-    margin-bottom: 14px;
-  }
-  .header-title {
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 30px;
-    color: #fff;
-    line-height: 1.3;
-    letter-spacing: 3px;
-  }
-  .header-sub {
-    margin-top: 8px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 1px;
-  }
-  .bookmark {
-    position: absolute;
-    right: 28px; top: 0;
-    width: 28px; height: 60px;
-    background: var(--seal);
-    clip-path: polygon(0 0,100% 0,100% 100%,50% 80%,0 100%);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 8px;
-    color: rgba(255,255,255,0.85);
-    font-size: 14px;
-  }
+        /* 封面区 */
+        .header {
+            text-align: center;
+            padding: 32px 20px 28px;
+            background: linear-gradient(135deg, #1a73e8 0%, #4285f4 50%, #6ea2ff 100%);
+            border-radius: var(--radius);
+            color: white;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
 
-  /* ── 表单内容 ── */
-  .content { padding: 28px 24px 40px; }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
 
-  .product-card {
-    background: var(--paper-deep);
-    border: 1.5px solid rgba(120,90,40,0.25);
-    border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 28px;
-    position: relative;
-    animation: fadeSlide 0.6s ease both;
-  }
-  .product-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 4px;
-    background: linear-gradient(180deg, var(--amber), var(--rust));
-    border-radius: 4px 0 0 4px;
-  }
-  .product-name { font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: 1px; margin-bottom: 10px; padding-left: 10px; }
-  .product-desc { font-size: 13px; color: var(--mist); line-height: 2; padding-left: 10px; }
-  .product-price { display: inline-flex; align-items: baseline; gap: 3px; margin-top: 14px; padding-left: 10px; }
-  .price-label  { font-size: 12px; color: var(--mist); }
-  .price-num    { font-family: 'Ma Shan Zheng', cursive; font-size: 36px; color: var(--seal); line-height: 1; }
-  .price-unit   { font-size: 14px; color: var(--mist); margin-left: 2px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-left: 10px; }
-  .tag  { font-size: 11px; padding: 3px 8px; border-radius: 2px; letter-spacing: 1px; }
-  .tag-amber { background: rgba(200,134,10,0.12); color: var(--amber); border: 1px solid rgba(200,134,10,0.3); }
-  .tag-ink   { background: rgba(26,18,8,0.07);   color: var(--mist);  border: 1px solid rgba(26,18,8,0.15); }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -20%;
+            width: 160px;
+            height: 160px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50%;
+        }
 
-  .section-label {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 14px; color: var(--mist); letter-spacing: 2px; margin-bottom: 20px;
-  }
-  .section-label::before,.section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+        .book-icon {
+            font-size: 52px;
+            margin-bottom: 12px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
 
-  .question-block { margin-bottom: 26px; animation: fadeSlide 0.7s ease both; }
-  .question-block:nth-child(2) { animation-delay: 0.08s; }
-  .question-block:nth-child(3) { animation-delay: 0.16s; }
-  .question-block:nth-child(4) { animation-delay: 0.24s; }
-  .question-block:nth-child(5) { animation-delay: 0.32s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
 
-  .q-num {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px;
-    background: var(--ink); color: var(--amber);
-    font-size: 11px; border-radius: 50%; margin-right: 8px; flex-shrink: 0;
-  }
-  .q-title {
-    font-size: 15px; font-weight: 600; color: var(--ink);
-    line-height: 1.6; display: flex; align-items: flex-start; margin-bottom: 14px;
-  }
-  .q-title-text { flex: 1; }
-  .required { color: var(--seal); margin-left: 3px; font-size: 13px; }
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
 
-  .options { display: flex; flex-direction: column; gap: 10px; }
-  .option-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px 14px;
-    border: 1.5px solid rgba(120,90,40,0.2);
-    border-radius: 4px; cursor: pointer;
-    background: var(--paper);
-    transition: all 0.2s ease;
-    position: relative; overflow: hidden;
-  }
-  .option-item:hover { border-color: var(--amber); background: rgba(200,134,10,0.04); }
-  .option-item.selected { border-color: var(--amber); background: rgba(200,134,10,0.08); }
-  .option-item.selected::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-    width: 3px; background: var(--amber);
-  }
-  .radio-circle {
-    width: 18px; height: 18px;
-    border: 2px solid rgba(120,90,40,0.35); border-radius: 50%;
-    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-  }
-  .option-item.selected .radio-circle { border-color: var(--amber); background: var(--amber); }
-  .radio-dot {
-    width: 7px; height: 7px; background: #fff; border-radius: 50%;
-    opacity: 0; transform: scale(0); transition: all 0.2s;
-  }
-  .option-item.selected .radio-dot { opacity: 1; transform: scale(1); }
-  .checkbox-sq {
-    width: 18px; height: 18px;
-    border: 2px solid rgba(120,90,40,0.35); border-radius: 3px;
-    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; font-size: 11px; color: transparent;
-  }
-  .option-item.selected .checkbox-sq { border-color: var(--amber); background: var(--amber); color: #fff; }
-  .option-text  { font-size: 14px; color: var(--ink); line-height: 1.4; flex: 1; }
-  .option-emoji { font-size: 16px; flex-shrink: 0; }
+        .header .subtitle {
+            font-size: 13px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
 
-  .text-input {
-    width: 100%; background: var(--paper);
-    border: 1.5px solid rgba(120,90,40,0.2); border-radius: 4px;
-    padding: 12px 14px; font-family: 'Noto Serif SC', serif;
-    font-size: 14px; color: var(--ink); resize: vertical;
-    transition: border-color 0.2s; outline: none; min-height: 90px;
-  }
-  .text-input::placeholder { color: rgba(120,90,40,0.35); }
-  .text-input:focus { border-color: var(--amber); }
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 11px;
+            margin-top: 10px;
+            backdrop-filter: blur(4px);
+        }
 
-  .submit-wrap {
-    margin-top: 32px; padding-top: 24px;
-    border-top: 1px dashed rgba(120,90,40,0.25); text-align: center;
-  }
-  .btn-submit {
-    display: inline-block; background: var(--ink); color: var(--amber);
-    font-family: 'Ma Shan Zheng', cursive; font-size: 18px; letter-spacing: 4px;
-    padding: 14px 48px; border: none; border-radius: 3px; cursor: pointer;
-    position: relative; overflow: hidden; transition: transform 0.15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn-submit::before {
-    content: ''; position: absolute; top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-    transition: left 0.4s ease;
-  }
-  .btn-submit:hover::before { left: 100%; }
-  .btn-submit:active { transform: scale(0.97); }
-  .btn-submit:disabled { background: rgba(26,18,8,0.4); color: rgba(200,134,10,0.5); cursor: not-allowed; }
-  .hint-text { margin-top: 12px; font-size: 12px; color: var(--mist); letter-spacing: 1px; }
+        /* 调查卡片 */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 14px;
+        }
 
-  /* ── 成功页 ── */
-  .success-view {
-    display: none; flex-direction: column; align-items: center;
-    padding: 48px 24px 60px;
-    animation: fadeSlide 0.5s ease both;
-  }
-  .success-view.show { display: flex; }
+        .card-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-  .seal-stamp {
-    width: 90px; height: 90px;
-    border: 4px solid var(--seal); border-radius: 8px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    margin-bottom: 24px; color: var(--seal); transform: rotate(-8deg); position: relative;
-  }
-  .seal-stamp::before {
-    content: ''; position: absolute; inset: 5px;
-    border: 1.5px solid var(--seal); border-radius: 4px; opacity: 0.4;
-  }
-  .seal-big   { font-family: 'Ma Shan Zheng', cursive; font-size: 34px; line-height: 1; }
-  .seal-small { font-size: 10px; letter-spacing: 2px; margin-top: 4px; }
+        .card-title::before {
+            content: '';
+            width: 3px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
 
-  .success-title {
-    font-family: 'Ma Shan Zheng', cursive; font-size: 26px;
-    color: var(--ink); letter-spacing: 3px; margin-bottom: 10px;
-  }
-  .success-desc {
-    font-size: 14px; color: var(--mist); line-height: 2;
-    max-width: 300px; text-align: center; margin-bottom: 32px;
-  }
+        /* 商品说明 */
+        .product-info {
+            background: #f0f4ff;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 6px;
+        }
 
-  .success-name {
-    margin-top: 8px; font-size: 13px;
-    color: rgba(120,90,40,0.5); letter-spacing: 2px;
-  }
+        .product-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 14px;
+        }
 
-  /* ── 底部 ── */
-  .footer {
-    text-align: center; padding: 20px 24px;
-    border-top: 1px solid var(--line);
-    font-size: 11px; color: rgba(120,90,40,0.4); letter-spacing: 1px;
-  }
+        .product-row .label {
+            color: var(--text-light);
+        }
 
-  @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+        .product-row .value {
+            font-weight: 600;
+            color: var(--text);
+        }
 
-  @supports(padding: max(0px)) {
-    .page-wrap { padding-bottom: env(safe-area-inset-bottom); }
-  }
-</style>
+        .product-row .value.highlight {
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .product-row .value.price {
+            color: #f59e0b;
+            font-size: 16px;
+        }
+
+        .product-row .value.note {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .price-tag {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fff3cd, #fff8e1);
+            border: 1px solid #ffe082;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            gap: 8px;
+        }
+
+        .price-tag .num {
+            font-size: 32px;
+            font-weight: 800;
+            color: #f59e0b;
+        }
+
+        .price-tag .unit {
+            font-size: 14px;
+            color: #f59e0b;
+        }
+
+        .price-tag .desc {
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        /* 投票选项 */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 16px 18px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: #f0f4ff;
+        }
+
+        .option.selected.yes {
+            border-color: var(--yes-color);
+            background: #ecfdf5;
+        }
+
+        .option.selected.no {
+            border-color: var(--no-color);
+            background: #fef2f2;
+        }
+
+        .option.selected.abstain {
+            border-color: var(--abstain-color);
+            background: #f9fafb;
+        }
+
+        .option .radio {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            margin-right: 14px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .option.selected.yes .radio {
+            border-color: var(--yes-color);
+            background: var(--yes-color);
+        }
+
+        .option.selected.no .radio {
+            border-color: var(--no-color);
+            background: var(--no-color);
+        }
+
+        .option.selected.abstain .radio {
+            border-color: var(--abstain-color);
+            background: var(--abstain-color);
+        }
+
+        .option .radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .option.selected .radio::after {
+            opacity: 1;
+        }
+
+        .option .opt-content {
+            flex: 1;
+        }
+
+        .option .opt-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .option .opt-desc {
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .option .opt-icon {
+            font-size: 24px;
+            margin-left: 10px;
+        }
+
+        /* 提交按钮 */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .hint {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* 结果区 */
+        .results {
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .result-bar-group {
+            margin-bottom: 18px;
+        }
+
+        .result-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .result-bar-label .label {
+            font-weight: 600;
+        }
+
+        .result-bar-label .pct {
+            color: var(--text-light);
+        }
+
+        .result-bar-label .count {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-left: 6px;
+        }
+
+        .result-bar {
+            height: 28px;
+            background: var(--bar-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .result-bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            padding-left: 12px;
+            min-width: 40px;
+        }
+
+        .result-bar-fill span {
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .result-bar-fill.yes { background: linear-gradient(90deg, #10b981, #34d399); }
+        .result-bar-fill.no { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .result-bar-fill.abstain { background: linear-gradient(90deg, #6b7280, #9ca3af); }
+
+        .result-total {
+            text-align: center;
+            padding: 16px;
+            background: #f0f4ff;
+            border-radius: 10px;
+            margin-top: 8px;
+        }
+
+        .result-total .num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .result-total .label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* 隐私提示 */
+        .privacy-note {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-light);
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-80px);
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 18px 0;
+        }
+
+        /* Loading */
+        .loading-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.85);
+            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 动画入场 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card { animation: fadeInUp 0.4s ease; }
+        .header { animation: fadeInUp 0.4s ease; }
+
+        /* 公众号场景优化 */
+        @media screen and (max-width: 480px) {
+            body { padding: 0; background: white; }
+            .container { max-width: 100%; padding: 0 0 20px; }
+            .card { border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+            .header { border-radius: 0; }
+            .option { padding: 14px 16px; }
+        }
+    </style>
 </head>
 <body>
-<div class="page-wrap">
 
-  <!-- 顶部 -->
-  <div class="header-band">
-    <div class="bookmark">📖</div>
-    <div class="badge">书宙漫游 · 读者调查</div>
-    <div class="header-title">电子书合集<br>意向问卷</div>
-    <div class="header-sub">诚邀您花 1 分钟，留下宝贵意见</div>
-  </div>
+<div class="container">
 
-  <!-- 表单 -->
-  <div id="formView">
-    <div class="content">
-
-      <!-- 产品卡 -->
-      <div class="product-card">
-        <div class="product-name">📚 100本精选 PDF 电子合集</div>
-        <div class="product-desc">
-          涵盖人文、科学、历史、商业等领域<br>
-          百度网盘一键下载 · 永久保存
-        </div>
-        <div class="tags">
-          <span class="tag tag-amber">100 本精选好书</span>
-          <span class="tag tag-ink">百度网盘下载</span>
-          <span class="tag tag-ink">PDF 高清格式</span>
-        </div>
-        <div class="product-price">
-          <span class="price-label">限时仅</span>
-          <span class="price-num">10</span>
-          <span class="price-unit">元</span>
-        </div>
-      </div>
-
-      <div class="section-label">意向调查</div>
-
-      <!-- Q1 购买意向 -->
-      <div class="question-block">
-        <div class="q-title">
-          <span class="q-num">1</span>
-          <span class="q-title-text">您是否愿意以 <strong>10元</strong> 购买这套 100 本 PDF 电子合集？<span class="required">*</span></span>
-        </div>
-        <div class="options" id="q1">
-          <div class="option-item" data-group="q1" data-val="yes" onclick="selectRadio(this)">
-            <div class="radio-circle"><div class="radio-dot"></div></div>
-            <span class="option-emoji">✅</span>
-            <span class="option-text">愿意购买，10元完全可以接受</span>
-          </div>
-          <div class="option-item" data-group="q1" data-val="maybe" onclick="selectRadio(this)">
-            <div class="radio-circle"><div class="radio-dot"></div></div>
-            <span class="option-emoji">🤔</span>
-            <span class="option-text">有兴趣，但想先了解更多内容</span>
-          </div>
-          <div class="option-item" data-group="q1" data-val="no" onclick="selectRadio(this)">
-            <div class="radio-circle"><div class="radio-dot"></div></div>
-            <span class="option-emoji">❌</span>
-            <span class="option-text">暂不考虑购买</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Q2 书类 -->
-      <div class="question-block">
-        <div class="q-title">
-          <span class="q-num">2</span>
-          <span class="q-title-text">您最希望合集里包含哪类书籍？（可多选）</span>
-        </div>
-        <div class="options" id="q2">
-          <div class="option-item" data-group="q2" data-val="human"   onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">🏛</span><span class="option-text">人文历史 / 哲学社科</span></div>
-          <div class="option-item" data-group="q2" data-val="science" onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">🔬</span><span class="option-text">自然科学 / 科普读物</span></div>
-          <div class="option-item" data-group="q2" data-val="biz"     onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">💼</span><span class="option-text">商业管理 / 职场提升</span></div>
-          <div class="option-item" data-group="q2" data-val="tech"    onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">💻</span><span class="option-text">科技 / 编程 / AI</span></div>
-          <div class="option-item" data-group="q2" data-val="lit"     onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">📖</span><span class="option-text">文学经典 / 小说散文</span></div>
-          <div class="option-item" data-group="q2" data-val="self"    onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">🧘</span><span class="option-text">心理 / 个人成长</span></div>
-        </div>
-      </div>
-
-      <!-- Q3 设备 -->
-      <div class="question-block">
-        <div class="q-title">
-          <span class="q-num">3</span>
-          <span class="q-title-text">您通常在哪里阅读电子书？（可多选）</span>
-        </div>
-        <div class="options" id="q3">
-          <div class="option-item" data-group="q3" data-val="phone" onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">📱</span><span class="option-text">手机（微信阅读 / 本地 PDF）</span></div>
-          <div class="option-item" data-group="q3" data-val="pc"    onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">💻</span><span class="option-text">电脑</span></div>
-          <div class="option-item" data-group="q3" data-val="pad"   onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">📟</span><span class="option-text">平板 / 阅读器（Kindle 等）</span></div>
-        </div>
-      </div>
-
-      <!-- Q4 定价 -->
-      <div class="question-block">
-        <div class="q-title">
-          <span class="q-num">4</span>
-          <span class="q-title-text">您觉得 10元/100本 的定价如何？<span class="required">*</span></span>
-        </div>
-        <div class="options" id="q4">
-          <div class="option-item" data-group="q4" data-val="cheap" onclick="selectRadio(this)"><div class="radio-circle"><div class="radio-dot"></div></div><span class="option-emoji">🎉</span><span class="option-text">非常划算，超出预期</span></div>
-          <div class="option-item" data-group="q4" data-val="ok"    onclick="selectRadio(this)"><div class="radio-circle"><div class="radio-dot"></div></div><span class="option-emoji">👍</span><span class="option-text">合理，可以接受</span></div>
-          <div class="option-item" data-group="q4" data-val="high"  onclick="selectRadio(this)"><div class="radio-circle"><div class="radio-dot"></div></div><span class="option-emoji">💬</span><span class="option-text">感觉偏高，希望更便宜</span></div>
-          <div class="option-item" data-group="q4" data-val="free"  onclick="selectRadio(this)"><div class="radio-circle"><div class="radio-dot"></div></div><span class="option-emoji">🙏</span><span class="option-text">希望免费提供</span></div>
-        </div>
-      </div>
-
-      <!-- Q5 留言 -->
-      <div class="question-block">
-        <div class="q-title">
-          <span class="q-num">5</span>
-          <span class="q-title-text">还有什么想对我们说的？（选填）</span>
-        </div>
-        <textarea class="text-input" id="comment" placeholder="您的建议、期望的书单，或任何想法…"></textarea>
-      </div>
-
-      <div class="submit-wrap">
-        <button class="btn-submit" id="submitBtn" onclick="submitForm()">提交问卷</button>
-        <div class="hint-text">感谢您的参与 · 数据仅供产品规划参考</div>
-      </div>
+    <!-- 封面 -->
+    <div class="header">
+        <div class="book-icon">📚</div>
+        <h1>书宙漫游</h1>
+        <div class="subtitle">公众号文章100本PDF资料合集<br>计划限时有偿发布</div>
+        <div class="badge">📊 读者意愿统计 · 匿名参与</div>
     </div>
-  </div>
 
-  <!-- 成功页 -->
-  <div class="success-view" id="successView">
-    <div class="seal-stamp">
-      <div class="seal-big">收</div>
-      <div class="seal-small">书宙漫游</div>
-    </div>
-    <div class="success-title">感谢您的反馈</div>
-    <div class="success-desc">
-      您的意见已收到！<br>
-      关注「书宙漫游」第一时间获取上架通知 📚
-    </div>
-    <div class="success-name">— 书宙漫游 —</div>
-  </div>
+    <!-- 调查内容 -->
+    <div class="card" id="surveyCard" style="position:relative;">
+        <div class="card-title">请回答以下问题</div>
 
-  <div class="footer">© 书宙漫游 · 本调查仅用于产品规划参考</div>
+        <!-- 商品说明 -->
+        <div class="product-info">
+            <div class="product-row">
+                <span class="label">内容形式</span>
+                <span class="value">PDF电子资料合集</span>
+            </div>
+            <div class="product-row">
+                <span class="label">内容规模</span>
+                <span class="value highlight">到100篇文章时发100本</span>
+            </div>
+            <div class="product-row">
+                <span class="label">书籍来源</span>
+                <span class="value note">网络搜索并格式整理</span>
+            </div>
+            <div class="product-row">
+                <span class="label">获取方式</span>
+                <span class="value">百度网盘下载</span>
+            </div>
+
+            <div class="price-tag">
+                <span class="num">¥10</span>
+                <div>
+                    <div class="unit">一次性付费</div>
+                    <div class="desc">获取100本PDF合集</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 核心问题 -->
+        <div class="card-title">您愿意付费吗？</div>
+
+        <div class="options" id="options">
+            <div class="option" data-choice="yes" onclick="selectOption(this)">
+                <div class="radio"></div>
+                <div class="opt-content">
+                    <div class="opt-title">✅ 愿意购买</div>
+                    <div class="opt-desc">10元获取全部书籍，值得尝试</div>
+                </div>
+                <div class="opt-icon">💚</div>
+            </div>
+
+            <div class="option" data-choice="no" onclick="selectOption(this)">
+                <div class="radio"></div>
+                <div class="opt-content">
+                    <div class="opt-title">❌ 暂不购买</div>
+                    <div class="opt-desc">价格合适，但暂时不需要</div>
+                </div>
+                <div class="opt-icon">🔴</div>
+            </div>
+
+            <div class="option" data-choice="abstain" onclick="selectOption(this)">
+                <div class="radio"></div>
+                <div class="opt-content">
+                    <div class="opt-title">🤔 还在观望</div>
+                    <div class="opt-desc">希望了解更多细节后再决定</div>
+                </div>
+                <div class="opt-icon">🟡</div>
+            </div>
+        </div>
+
+        <button class="submit-btn" id="submitBtn" onclick="submitVote()" disabled>
+            提交投票
+        </button>
+
+        <div class="hint" id="hintText">请先选择一个选项</div>
+
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <div style="font-size:13px;color:var(--text-light);">提交中...</div>
+        </div>
+    </div>
+
+    <!-- 结果展示 -->
+    <div class="card results" id="resultsCard">
+        <div class="card-title">📊 实时统计结果</div>
+        <div id="resultsContent">
+            <div style="text-align:center;padding:20px;color:var(--text-light);">正在加载数据…</div>
+        </div>
+        <div class="divider"></div>
+        <div class="result-total">
+            <div class="num" id="totalNum">-</div>
+            <div class="label">人已参与投票</div>
+        </div>
+    </div>
+
+    <!-- 隐私说明 -->
+    <div class="card">
+        <div class="privacy-note">
+            🔒 匿名统计 · 您的选择仅用于数据汇总 · 无法追溯个人
+        </div>
+    </div>
+
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-  // ── 单选 / 多选
-  function selectRadio(el) {
-    const g = el.dataset.group;
-    document.querySelectorAll('[data-group="' + g + '"]').forEach(function(i) { i.classList.remove('selected'); });
-    el.classList.add('selected');
-  }
-  function selectCheck(el) { el.classList.toggle('selected'); }
+    // ===== CountAPI 实时统计配置 =====
+    const NS = 'shuzhou-survey-2026';
+    const KEYS = { yes: 'vote-yes', no: 'vote-no', abstain: 'vote-abstain' };
 
-  // ── 提交
-  function submitForm() {
-    var q1el = document.querySelector('#q1 .selected');
-    var q4el = document.querySelector('#q4 .selected');
-    if (!q1el) { showToast('请回答第 1 题'); document.getElementById('q1').scrollIntoView({behavior:'smooth',block:'center'}); return; }
-    if (!q4el) { showToast('请回答第 4 题'); document.getElementById('q4').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    function countHit(key) {
+        return fetch('https://api.countapi.xyz/hit/' + NS + '/' + key)
+            .then(function(r) { return r.json(); })
+            .catch(function() { return { value: null }; });
+    }
+    function countGet(key) {
+        return fetch('https://api.countapi.xyz/get/' + NS + '/' + key)
+            .then(function(r) { return r.json(); })
+            .catch(function() { return { value: null }; });
+    }
 
-    var btn = document.getElementById('submitBtn');
-    btn.disabled = true; btn.textContent = '提交中…';
+    // ===== 投票逻辑 =====
+    const STORAGE_KEY = 'shuzhou_vote_2026';
+    let selectedChoice = null;
+    let voted = false;
 
-    // 收集数据（控制台输出，可对接后端）
-    var formData = {
-      q1: q1el ? q1el.dataset.val : '',
-      q2: Array.from(document.querySelectorAll('#q2 .selected')).map(function(i) { return i.dataset.val; }),
-      q3: Array.from(document.querySelectorAll('#q3 .selected')).map(function(i) { return i.dataset.val; }),
-      q4: q4el ? q4el.dataset.val : '',
-      comment: document.getElementById('comment').value
-    };
-    console.log('问卷提交:', JSON.stringify(formData, null, 2));
+    // 检查是否已投过票
+    if (localStorage.getItem(STORAGE_KEY)) {
+        voted = true;
+        document.getElementById('surveyCard').style.display = 'none';
+        loadAndShowResults();
+    }
 
-    // 切换成功页
-    setTimeout(function() {
-      document.getElementById('formView').style.display = 'none';
-      var sv = document.getElementById('successView');
-      sv.style.display = 'flex'; sv.classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 500);
-  }
+    function selectOption(el) {
+        if (voted) return;
+        document.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+        el.classList.add('selected');
+        selectedChoice = el.dataset.choice;
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('hintText').textContent = '您选择了：' + el.querySelector('.opt-title').textContent;
+    }
 
-  // ── Toast
-  function showToast(msg) {
-    var old = document.getElementById('toast');
-    if (old) old.remove();
-    var t = document.createElement('div');
-    t.id = 'toast'; t.textContent = msg;
-    t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(26,18,8,0.88);color:#e8a822;padding:10px 20px;border-radius:4px;font-size:13px;letter-spacing:1px;z-index:999;white-space:nowrap;';
-    document.body.appendChild(t);
-    setTimeout(function() { t.remove(); }, 2200);
-  }
+    function submitVote() {
+        if (!selectedChoice) return;
+
+        var overlay = document.getElementById('loadingOverlay');
+        overlay.classList.add('show');
+        var btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+
+        // 写入 CountAPI
+        countHit(KEYS[selectedChoice]).then(function() {
+            voted = true;
+            localStorage.setItem(STORAGE_KEY, 'voted');
+            overlay.classList.remove('show');
+
+            document.getElementById('surveyCard').style.display = 'none';
+            loadAndShowResults();
+
+            showToast('✅ 投票成功，感谢参与！');
+        });
+    }
+
+    // 加载并渲染统计
+    function loadAndShowResults() {
+        document.getElementById('resultsCard').classList.add('show');
+
+        Promise.all([
+            countGet(KEYS.yes),
+            countGet(KEYS.no),
+            countGet(KEYS.abstain)
+        ]).then(function(results) {
+            var yes = Math.max(0, results[0].value || 0);
+            var no = Math.max(0, results[1].value || 0);
+            var abstain = Math.max(0, results[2].value || 0);
+            var total = yes + no + abstain;
+
+            document.getElementById('totalNum').textContent = total;
+
+            var yesPct = total ? Math.round(yes / total * 100) : 0;
+            var noPct = total ? Math.round(no / total * 100) : 0;
+            var abstainPct = total ? (100 - yesPct - noPct) : 0;
+
+            var html = ''
+                + '<div class="result-bar-group">'
+                + '  <div class="result-bar-label">'
+                + '    <span class="label">✅ 愿意购买</span>'
+                + '    <span><span class="pct">' + yesPct + '%</span><span class="count">(' + yes + '人)</span></span>'
+                + '  </div>'
+                + '  <div class="result-bar">'
+                + '    <div class="result-bar-fill yes" style="width:0%">'
+                + (yesPct > 5 ? '      <span>' + yesPct + '%</span>' : '')
+                + '    </div>'
+                + '  </div>'
+                + '</div>'
+                + '<div class="result-bar-group">'
+                + '  <div class="result-bar-label">'
+                + '    <span class="label">❌ 暂不购买</span>'
+                + '    <span><span class="pct">' + noPct + '%</span><span class="count">(' + no + '人)</span></span>'
+                + '  </div>'
+                + '  <div class="result-bar">'
+                + '    <div class="result-bar-fill no" style="width:0%">'
+                + (noPct > 5 ? '      <span>' + noPct + '%</span>' : '')
+                + '    </div>'
+                + '  </div>'
+                + '</div>'
+                + '<div class="result-bar-group">'
+                + '  <div class="result-bar-label">'
+                + '    <span class="label">🤔 还在观望</span>'
+                + '    <span><span class="pct">' + abstainPct + '%</span><span class="count">(' + abstain + '人)</span></span>'
+                + '  </div>'
+                + '  <div class="result-bar">'
+                + '    <div class="result-bar-fill abstain" style="width:0%">'
+                + (abstainPct > 5 ? '      <span>' + abstainPct + '%</span>' : '')
+                + '    </div>'
+                + '  </div>'
+                + '</div>';
+
+            document.getElementById('resultsContent').innerHTML = html;
+
+            // 延迟触发进度条动画
+            requestAnimationFrame(function() {
+                setTimeout(function() {
+                    var bars = document.querySelectorAll('.result-bar-fill');
+                    if (bars[0]) bars[0].style.width = yesPct + '%';
+                    if (bars[1]) bars[1].style.width = noPct + '%';
+                    if (bars[2]) bars[2].style.width = abstainPct + '%';
+                }, 100);
+            });
+        }).catch(function() {
+            document.getElementById('resultsContent').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-light);">数据加载失败，请稍后刷新</div>';
+        });
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 3000);
+    }
 </script>
+
 </body>
 </html>
