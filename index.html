@@ -3,443 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>📚 书宙漫游 · PDF电子书合集 · 付费意愿调查</title>
+    <title>书宙漫游 · 一个小调查</title>
     <style>
         :root {
             --primary: #1a73e8;
             --primary-dark: #1557b0;
-            --bg: #f8f9fc;
+            --bg: #f5f5f5;
             --card: #ffffff;
-            --text: #1f2937;
-            --text-light: #6b7280;
-            --border: #e5e7eb;
+            --text: #333333;
+            --text-light: #888888;
+            --border: #e0e0e0;
             --yes-color: #10b981;
             --no-color: #ef4444;
             --abstain-color: #6b7280;
-            --bar-bg: #e5e7eb;
-            --radius: 14px;
-            --shadow: 0 4px 24px rgba(0,0,0,0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
             background: var(--bg);
             color: var(--text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            max-width: 580px;
+            margin: 0 auto;
+            background: var(--card);
             min-height: 100vh;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 16px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 520px;
-            padding: 0 0 40px;
-        }
-
-        /* 封面区 */
-        .header {
+        /* 文章头部 */
+        .article-header {
+            padding: 48px 24px 32px;
             text-align: center;
-            padding: 32px 20px 28px;
-            background: linear-gradient(135deg, #1a73e8 0%, #4285f4 50%, #6ea2ff 100%);
-            border-radius: var(--radius);
-            color: white;
-            margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -30%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -40%;
-            left: -20%;
-            width: 160px;
-            height: 160px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 50%;
-        }
-
-        .book-icon {
-            font-size: 52px;
-            margin-bottom: 12px;
+        .article-tag {
             display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        .header h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
+            background: #eef3ff;
+            color: var(--primary);
+            font-size: 12px;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
             letter-spacing: 1px;
         }
 
-        .header .subtitle {
+        .article-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .article-meta {
             font-size: 13px;
-            opacity: 0.85;
-            line-height: 1.6;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            padding: 3px 12px;
-            font-size: 11px;
-            margin-top: 10px;
-            backdrop-filter: blur(4px);
-        }
-
-        /* 调查卡片 */
-        .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 24px;
-            margin-bottom: 14px;
-        }
-
-        .card-title {
-            font-size: 14px;
             color: var(--text-light);
-            margin-bottom: 18px;
+        }
+
+        /* 正文 */
+        .article-body {
+            padding: 28px 24px;
+        }
+
+        .article-body p {
+            font-size: 15px;
+            line-height: 2;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .article-body .lead {
+            font-size: 16px;
+            color: #333;
+            border-left: 3px solid var(--primary);
+            padding-left: 14px;
+            margin-bottom: 24px;
+            line-height: 2;
+        }
+
+        .article-body .section-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 32px 0 16px;
+            padding-left: 10px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .article-body .highlight-box {
+            background: #fffbe6;
+            border-left: 3px solid #f5a623;
+            padding: 16px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .article-body .highlight-box strong {
+            color: #d48806;
+        }
+
+        .article-body .book-list {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0 24px;
+        }
+
+        .book-list-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #555;
+            border-bottom: 1px dashed #eee;
         }
 
-        .card-title::before {
+        .book-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .book-list-item .num {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 13px;
+            width: 28px;
+            flex-shrink: 0;
+        }
+
+        .book-list-item .name {
+            flex: 1;
+        }
+
+        .book-list-item .dots {
+            flex: 1;
+            border-bottom: 1px dotted #ddd;
+            margin: 0 8px;
+            min-width: 20px;
+        }
+
+        .article-body .end-note {
+            font-size: 14px;
+            color: #999;
+            text-align: center;
+            margin: 32px 0 0;
+            font-style: italic;
+        }
+
+        /* 分割线 */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            margin: 0;
+            background: var(--card);
+        }
+
+        .section-divider::before,
+        .section-divider::after {
             content: '';
-            width: 3px;
-            height: 16px;
-            background: var(--primary);
-            border-radius: 2px;
+            flex: 1;
+            height: 1px;
+            background: #eee;
         }
 
-        /* 商品说明 */
-        .product-info {
+        .section-divider span {
+            padding: 0 16px;
+            font-size: 13px;
+            color: #bbb;
+            white-space: nowrap;
+        }
+
+        /* 调查区域 */
+        .survey-section {
+            padding: 0;
+        }
+
+        .survey-header {
+            text-align: center;
+            padding: 24px 24px 8px;
+        }
+
+        .survey-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .survey-header p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* 商品说明卡片 */
+        .product-card {
+            margin: 12px 20px 0;
             background: #f0f4ff;
             border-radius: 10px;
-            padding: 16px;
-            margin-bottom: 6px;
+            padding: 18px;
         }
 
         .product-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 0;
-            font-size: 14px;
+            padding: 5px 0;
+            font-size: 13px;
         }
 
-        .product-row .label {
-            color: var(--text-light);
-        }
+        .product-row .label { color: var(--text-light); }
+        .product-row .value { font-weight: 600; color: var(--text); }
+        .product-row .value.blue { color: var(--primary); }
 
-        .product-row .value {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .product-row .value.highlight {
-            color: var(--primary);
-            font-size: 16px;
-        }
-
-        .product-row .value.price {
-            color: #f59e0b;
-            font-size: 16px;
-        }
-
-        .product-row .value.note {
-            font-size: 12px;
-            font-weight: 400;
-            color: var(--text-light);
-        }
-
-        .price-tag {
+        .price-box {
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #fff3cd, #fff8e1);
             border: 1px solid #ffe082;
             border-radius: 8px;
-            padding: 12px;
-            margin-top: 12px;
-            gap: 8px;
+            padding: 14px;
+            margin-top: 14px;
+            gap: 10px;
         }
 
-        .price-tag .num {
-            font-size: 32px;
+        .price-box .amount {
+            font-size: 36px;
             font-weight: 800;
             color: #f59e0b;
         }
 
-        .price-tag .unit {
-            font-size: 14px;
-            color: #f59e0b;
-        }
-
-        .price-tag .desc {
-            font-size: 12px;
-            color: var(--text-light);
-            line-height: 1.4;
-        }
+        .price-box .detail { font-size: 13px; color: #888; line-height: 1.5; }
+        .price-box .detail .main { font-size: 15px; color: #f59e0b; font-weight: 600; }
 
         /* 投票选项 */
-        .options {
+        .vote-area {
+            padding: 16px 20px;
+        }
+
+        .vote-options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
         }
 
-        .option {
+        .vote-option {
             display: flex;
             align-items: center;
-            padding: 16px 18px;
+            padding: 14px 16px;
             border: 2px solid var(--border);
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .option:hover {
-            border-color: var(--primary);
-            background: #f0f4ff;
-        }
+        .vote-option:active { transform: scale(0.98); }
 
-        .option.selected.yes {
-            border-color: var(--yes-color);
-            background: #ecfdf5;
-        }
+        .vote-option:hover { border-color: var(--primary); background: #f0f4ff; }
 
-        .option.selected.no {
-            border-color: var(--no-color);
-            background: #fef2f2;
-        }
+        .vote-option.selected.yes { border-color: var(--yes-color); background: #ecfdf5; }
+        .vote-option.selected.no { border-color: var(--no-color); background: #fef2f2; }
+        .vote-option.selected.abstain { border-color: var(--abstain-color); background: #f9fafb; }
 
-        .option.selected.abstain {
-            border-color: var(--abstain-color);
-            background: #f9fafb;
-        }
-
-        .option .radio {
-            width: 22px;
-            height: 22px;
+        .vote-option .dot {
+            width: 20px; height: 20px;
             border-radius: 50%;
             border: 2px solid var(--border);
-            margin-right: 14px;
+            margin-right: 12px;
             flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: all 0.2s;
+            position: relative;
         }
 
-        .option.selected.yes .radio {
-            border-color: var(--yes-color);
-            background: var(--yes-color);
-        }
-
-        .option.selected.no .radio {
-            border-color: var(--no-color);
-            background: var(--no-color);
-        }
-
-        .option.selected.abstain .radio {
-            border-color: var(--abstain-color);
-            background: var(--abstain-color);
-        }
-
-        .option .radio::after {
+        .vote-option.selected .dot { border-color: currentColor; }
+        .vote-option.selected .dot::after {
             content: '';
-            width: 8px;
-            height: 8px;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px; height: 8px;
             border-radius: 50%;
             background: white;
-            opacity: 0;
-            transition: opacity 0.2s;
         }
 
-        .option.selected .radio::after {
-            opacity: 1;
-        }
+        .vote-option.selected.yes .dot { background: var(--yes-color); }
+        .vote-option.selected.no .dot { background: var(--no-color); }
+        .vote-option.selected.abstain .dot { background: var(--abstain-color); }
 
-        .option .opt-content {
-            flex: 1;
-        }
+        .vote-option .opt-info { flex: 1; }
+        .vote-option .opt-title { font-size: 14px; font-weight: 600; margin-bottom: 1px; }
+        .vote-option .opt-desc { font-size: 12px; color: var(--text-light); }
+        .vote-option .opt-emoji { font-size: 22px; margin-left: 8px; }
 
-        .option .opt-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .option .opt-desc {
-            font-size: 12px;
-            color: var(--text-light);
-            line-height: 1.4;
-        }
-
-        .option .opt-icon {
-            font-size: 24px;
-            margin-left: 10px;
-        }
-
-        /* 提交按钮 */
         .submit-btn {
             width: 100%;
-            padding: 14px;
+            padding: 13px;
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
+            margin-top: 14px;
             transition: all 0.2s;
             letter-spacing: 1px;
-            margin-bottom: 10px;
         }
 
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
+        .submit-btn:hover { background: var(--primary-dark); }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .hint {
+        .vote-hint {
             text-align: center;
-            font-size: 11px;
-            color: var(--text-light);
-            margin-top: 4px;
-        }
-
-        /* 结果区 */
-        .results {
-            display: none;
-        }
-
-        .results.show {
-            display: block;
-        }
-
-        .result-bar-group {
-            margin-bottom: 18px;
-        }
-
-        .result-bar-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            margin-bottom: 6px;
-        }
-
-        .result-bar-label .label {
-            font-weight: 600;
-        }
-
-        .result-bar-label .pct {
-            color: var(--text-light);
-        }
-
-        .result-bar-label .count {
-            font-size: 11px;
-            color: var(--text-light);
-            margin-left: 6px;
-        }
-
-        .result-bar {
-            height: 28px;
-            background: var(--bar-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .result-bar-fill {
-            height: 100%;
-            border-radius: 8px;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            padding-left: 12px;
-            min-width: 40px;
-        }
-
-        .result-bar-fill span {
-            color: white;
             font-size: 12px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .result-bar-fill.yes { background: linear-gradient(90deg, #10b981, #34d399); }
-        .result-bar-fill.no { background: linear-gradient(90deg, #ef4444, #f87171); }
-        .result-bar-fill.abstain { background: linear-gradient(90deg, #6b7280, #9ca3af); }
-
-        .result-total {
-            text-align: center;
-            padding: 16px;
-            background: #f0f4ff;
-            border-radius: 10px;
+            color: var(--text-light);
             margin-top: 8px;
         }
 
-        .result-total .num {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--primary);
+        /* 结果 - 始终可见 */
+        .results-area {
+            padding: 16px 20px 24px;
         }
 
-        .result-total .label {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-top: 2px;
-        }
-
-        /* 隐私提示 */
-        .privacy-note {
+        .results-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 14px;
             text-align: center;
-            font-size: 11px;
-            color: var(--text-light);
-            padding: 12px;
+        }
+
+        .bar-group { margin-bottom: 14px; }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .bar-label .name { font-weight: 600; }
+        .bar-label .stat { color: var(--text-light); }
+        .bar-label .stat .count { font-size: 11px; margin-left: 4px; }
+
+        .bar-track {
+            height: 24px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 4px;
+            padding-left: 10px;
+            min-width: 36px;
+        }
+
+        .bar-fill span { color: white; font-size: 11px; font-weight: 700; white-space: nowrap; }
+        .bar-fill.yes { background: linear-gradient(90deg, #10b981, #34d399); }
+        .bar-fill.no { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .bar-fill.abstain { background: linear-gradient(90deg, #6b7280, #9ca3af); }
+
+        .total-box {
+            text-align: center;
+            padding: 14px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            margin-top: 6px;
+        }
+
+        .total-box .big { font-size: 26px; font-weight: 800; color: var(--primary); }
+        .total-box .small { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 20px 24px 32px;
+            font-size: 12px;
+            color: #bbb;
+            border-top: 1px solid #f0f0f0;
         }
 
         /* Toast */
@@ -448,7 +405,7 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(-80px);
-            background: #333;
+            background: rgba(0,0,0,0.75);
             color: white;
             padding: 10px 20px;
             border-radius: 8px;
@@ -457,175 +414,169 @@
             transition: transform 0.3s ease;
             pointer-events: none;
         }
+        .toast.show { transform: translateX(-50%) translateY(0); }
 
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 18px 0;
-        }
-
-        /* Loading */
-        .loading-overlay {
+        /* 加载 */
+        .loading-mask {
             display: none;
             position: absolute;
             inset: 0;
             background: rgba(255,255,255,0.85);
-            border-radius: 12px;
+            border-radius: 10px;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             z-index: 10;
         }
+        .loading-mask.show { display: flex; }
 
-        .loading-overlay.show {
-            display: flex;
-        }
-
-        .spinner {
-            width: 30px;
-            height: 30px;
-            border: 3px solid var(--border);
+        .spin {
+            width: 24px; height: 24px;
+            border: 3px solid #eee;
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* 动画入场 */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card { animation: fadeInUp 0.4s ease; }
-        .header { animation: fadeInUp 0.4s ease; }
-
-        /* 公众号场景优化 */
         @media screen and (max-width: 480px) {
-            body { padding: 0; background: white; }
-            .container { max-width: 100%; padding: 0 0 20px; }
-            .card { border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--border); margin-bottom: 0; }
-            .header { border-radius: 0; }
-            .option { padding: 14px 16px; }
+            .wrapper { max-width: 100%; }
+            .article-header { padding: 36px 18px 24px; }
+            .article-body { padding: 20px 18px; }
+            .product-card { margin: 12px 14px 0; }
+            .vote-area { padding: 16px 14px; }
+            .results-area { padding: 0 14px 20px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="wrapper">
 
-    <!-- 封面 -->
-    <div class="header">
-        <div class="book-icon">📚</div>
-        <h1>书宙漫游</h1>
-        <div class="subtitle">公众号文章100本PDF资料合集<br>计划限时有偿发布</div>
-        <div class="badge">📊 读者意愿统计 · 匿名参与</div>
+    <!-- 文章头部 -->
+    <div class="article-header">
+        <div class="article-tag">读者调查</div>
+        <h1 class="article-title">想做成一件事，先听听你们怎么说</h1>
+        <div class="article-meta">书宙漫游 · 2026年4月</div>
     </div>
 
-    <!-- 调查内容 -->
-    <div class="card" id="surveyCard" style="position:relative;">
-        <div class="card-title">请回答以下问题</div>
+    <!-- 正文 -->
+    <div class="article-body">
 
-        <!-- 商品说明 -->
-        <div class="product-info">
+        <p class="lead">写公众号有一阵子了，一直在琢磨一件事：能不能把文章里提到的好书整理成PDF，打包给需要的人。</p>
+
+        <p>事情其实很简单。每篇文章后面都会附上相关书籍的推荐，有些书我读过、整理过笔记，有些是读者在后台问到的。零零散散积累下来，已经有不少了。</p>
+
+        <p>但整理PDF是件费功夫的事——找资源、调格式、统一命名、上传网盘，一本书折腾下来少说半小时。如果没人在乎这件事，那纯属自娱自乐。</p>
+
+        <div class="highlight-box">
+            <strong>所以我想先做个小调查。</strong>不是那种长篇大论的问卷，就一个问题：如果我把这些书整理成PDF合集，标价10块钱，你愿意买吗？
+        </div>
+
+        <h3 class="section-title">具体是什么</h3>
+
+        <p>计划是这样的：等公众号文章写到第100篇的时候，同步放出100本PDF电子书。每篇文章配一本相关书籍，省去你自己去到处找的麻烦。</p>
+
+        <div class="product-card">
             <div class="product-row">
-                <span class="label">内容形式</span>
-                <span class="value">PDF电子资料合集</span>
+                <span class="label">内容</span>
+                <span class="value">PDF电子书合集</span>
             </div>
             <div class="product-row">
-                <span class="label">内容规模</span>
-                <span class="value highlight">到100篇文章时发100本</span>
+                <span class="label">规模</span>
+                <span class="value blue">100篇文章 = 100本书</span>
             </div>
             <div class="product-row">
-                <span class="label">书籍来源</span>
-                <span class="value note">网络搜索并格式整理</span>
+                <span class="label">来源</span>
+                <span class="value" style="font-size:12px;font-weight:400;color:#888;">网络搜集，格式整理</span>
             </div>
             <div class="product-row">
-                <span class="label">获取方式</span>
+                <span class="label">方式</span>
                 <span class="value">百度网盘下载</span>
             </div>
-
-            <div class="price-tag">
-                <span class="num">¥10</span>
-                <div>
-                    <div class="unit">一次性付费</div>
-                    <div class="desc">获取100本PDF合集</div>
+            <div class="price-box">
+                <span class="amount">¥10</span>
+                <div class="detail">
+                    <div class="main">一次性付费</div>
+                    <div>获取全部100本PDF</div>
                 </div>
             </div>
         </div>
 
-        <div class="divider"></div>
+        <p>不搞什么限时、限量、饥饿营销。10块钱，一次付费，百度网盘随便下。能做多少做多少，做不到100本就按实际数量来，该退差价退差价。</p>
 
-        <!-- 核心问题 -->
-        <div class="card-title">您愿意付费吗？</div>
+        <p>说白了，这件事能不能做下去，得看有没有人需要。如果大家觉得没意思，那我就安安静静写文章，不折腾了。</p>
 
-        <div class="options" id="options">
-            <div class="option" data-choice="yes" onclick="selectOption(this)">
-                <div class="radio"></div>
-                <div class="opt-content">
-                    <div class="opt-title">✅ 愿意购买</div>
-                    <div class="opt-desc">10元获取全部书籍，值得尝试</div>
+        <p class="end-note">—— 下面就是投票，往下划 ——</p>
+
+    </div>
+
+    <!-- 分割线 -->
+    <div class="section-divider"><span>投个票吧</span></div>
+
+    <!-- 调查区域 -->
+    <div class="survey-section">
+        <div class="survey-header">
+            <h2>一个选择题</h2>
+            <p>匿名投票，不会收集任何个人信息</p>
+        </div>
+
+        <div id="voteCard" style="position:relative;">
+            <div class="vote-area">
+                <div class="vote-options" id="voteOptions">
+                    <div class="vote-option" data-choice="yes" onclick="pick(this)">
+                        <div class="dot"></div>
+                        <div class="opt-info">
+                            <div class="opt-title">愿意买</div>
+                            <div class="opt-desc">10块钱不贵，值得一试</div>
+                        </div>
+                        <div class="opt-emoji">👍</div>
+                    </div>
+                    <div class="vote-option" data-choice="no" onclick="pick(this)">
+                        <div class="dot"></div>
+                        <div class="opt-info">
+                            <div class="opt-title">不需要</div>
+                            <div class="opt-desc">暂时没有这方面的需求</div>
+                        </div>
+                        <div class="opt-emoji">👋</div>
+                    </div>
+                    <div class="vote-option" data-choice="abstain" onclick="pick(this)">
+                        <div class="dot"></div>
+                        <div class="opt-info">
+                            <div class="opt-title">再看看</div>
+                            <div class="opt-desc">想先了解一下具体内容</div>
+                        </div>
+                        <div class="opt-emoji">👀</div>
+                    </div>
                 </div>
-                <div class="opt-icon">💚</div>
+
+                <button class="submit-btn" id="submitBtn" onclick="submitVote()" disabled>提交选择</button>
+                <div class="vote-hint" id="hintText">点击上方选项</div>
             </div>
 
-            <div class="option" data-choice="no" onclick="selectOption(this)">
-                <div class="radio"></div>
-                <div class="opt-content">
-                    <div class="opt-title">❌ 暂不购买</div>
-                    <div class="opt-desc">价格合适，但暂时不需要</div>
-                </div>
-                <div class="opt-icon">🔴</div>
-            </div>
-
-            <div class="option" data-choice="abstain" onclick="selectOption(this)">
-                <div class="radio"></div>
-                <div class="opt-content">
-                    <div class="opt-title">🤔 还在观望</div>
-                    <div class="opt-desc">希望了解更多细节后再决定</div>
-                </div>
-                <div class="opt-icon">🟡</div>
+            <div class="loading-mask" id="loadingMask">
+                <div class="spin"></div>
+                <div style="font-size:12px;color:#888;">提交中…</div>
             </div>
         </div>
 
-        <button class="submit-btn" id="submitBtn" onclick="submitVote()" disabled>
-            提交投票
-        </button>
-
-        <div class="hint" id="hintText">请先选择一个选项</div>
-
-        <div class="loading-overlay" id="loadingOverlay">
-            <div class="spinner"></div>
-            <div style="font-size:13px;color:var(--text-light);">提交中...</div>
+        <!-- 实时结果（始终可见） -->
+        <div class="results-area show" id="resultsArea">
+            <div class="results-title">实时投票结果</div>
+            <div id="resultsContent">
+                <div style="text-align:center;padding:16px;color:#bbb;">加载中…</div>
+            </div>
+            <div class="total-box">
+                <div class="big" id="totalNum">-</div>
+                <div class="small">人已参与投票</div>
+            </div>
         </div>
     </div>
 
-    <!-- 结果展示 -->
-    <div class="card results" id="resultsCard">
-        <div class="card-title">📊 实时统计结果</div>
-        <div id="resultsContent">
-            <div style="text-align:center;padding:20px;color:var(--text-light);">正在加载数据…</div>
-        </div>
-        <div class="divider"></div>
-        <div class="result-total">
-            <div class="num" id="totalNum">-</div>
-            <div class="label">人已参与投票</div>
-        </div>
-    </div>
-
-    <!-- 隐私说明 -->
-    <div class="card">
-        <div class="privacy-note">
-            🔒 匿名统计 · 您的选择仅用于数据汇总 · 无法追溯个人
-        </div>
+    <!-- 底部 -->
+    <div class="footer">
+        书宙漫游 · 感谢你的每一份真实反馈
     </div>
 
 </div>
@@ -633,139 +584,113 @@
 <div class="toast" id="toast"></div>
 
 <script>
-    // ===== CountAPI 实时统计配置 =====
-    const NS = 'shuzhou-survey-2026';
-    const KEYS = { yes: 'vote-yes', no: 'vote-no', abstain: 'vote-abstain' };
+    // CountAPI 配置
+    var NS = 'shuzhou-survey-2026';
+    var KEYS = { yes: 'vote-yes', no: 'vote-no', abstain: 'vote-abstain' };
+    var STORAGE = 'shuzhou_vote_2026';
 
     function countHit(key) {
         return fetch('https://api.countapi.xyz/hit/' + NS + '/' + key)
             .then(function(r) { return r.json(); })
-            .catch(function() { return { value: null }; });
+            .catch(function() { return null; });
     }
     function countGet(key) {
         return fetch('https://api.countapi.xyz/get/' + NS + '/' + key)
             .then(function(r) { return r.json(); })
-            .catch(function() { return { value: null }; });
+            .catch(function() { return { value: 0 }; });
     }
 
-    // ===== 投票逻辑 =====
-    const STORAGE_KEY = 'shuzhou_vote_2026';
-    let selectedChoice = null;
-    let voted = false;
+    var choice = null;
+    var voted = false;
 
-    // 检查是否已投过票
-    if (localStorage.getItem(STORAGE_KEY)) {
+    // 页面加载时立即拉取并展示实时结果
+    showResults();
+
+    // 已投过票的人隐藏投票选项
+    if (localStorage.getItem(STORAGE)) {
         voted = true;
-        document.getElementById('surveyCard').style.display = 'none';
-        loadAndShowResults();
+        document.getElementById('voteCard').style.display = 'none';
     }
 
-    function selectOption(el) {
+    function pick(el) {
         if (voted) return;
-        document.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
+        var all = document.querySelectorAll('.vote-option');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('selected');
         el.classList.add('selected');
-        selectedChoice = el.dataset.choice;
+        choice = el.dataset.choice;
         document.getElementById('submitBtn').disabled = false;
-        document.getElementById('hintText').textContent = '您选择了：' + el.querySelector('.opt-title').textContent;
+        document.getElementById('hintText').textContent = '已选择：' + el.querySelector('.opt-title').textContent;
     }
 
     function submitVote() {
-        if (!selectedChoice) return;
+        if (!choice) return;
 
-        var overlay = document.getElementById('loadingOverlay');
-        overlay.classList.add('show');
-        var btn = document.getElementById('submitBtn');
-        btn.disabled = true;
+        document.getElementById('loadingMask').classList.add('show');
+        document.getElementById('submitBtn').disabled = true;
 
-        // 写入 CountAPI
-        countHit(KEYS[selectedChoice]).then(function() {
+        countHit(KEYS[choice]).then(function() {
             voted = true;
-            localStorage.setItem(STORAGE_KEY, 'voted');
-            overlay.classList.remove('show');
-
-            document.getElementById('surveyCard').style.display = 'none';
-            loadAndShowResults();
-
-            showToast('✅ 投票成功，感谢参与！');
+            localStorage.setItem(STORAGE, '1');
+            document.getElementById('loadingMask').classList.remove('show');
+            document.getElementById('voteCard').style.display = 'none';
+            showResults();
+            showToast('投票成功，感谢参与！');
         });
     }
 
-    // 加载并渲染统计
-    function loadAndShowResults() {
-        document.getElementById('resultsCard').classList.add('show');
-
+    function showResults() {
+        // resultsArea 始终可见，只刷新内容
         Promise.all([
             countGet(KEYS.yes),
             countGet(KEYS.no),
             countGet(KEYS.abstain)
-        ]).then(function(results) {
-            var yes = Math.max(0, results[0].value || 0);
-            var no = Math.max(0, results[1].value || 0);
-            var abstain = Math.max(0, results[2].value || 0);
-            var total = yes + no + abstain;
+        ]).then(function(res) {
+            var y = Math.max(0, res[0].value || 0);
+            var n = Math.max(0, res[1].value || 0);
+            var a = Math.max(0, res[2].value || 0);
+            var t = y + n + a;
+            var yp = t ? Math.round(y / t * 100) : 0;
+            var np = t ? Math.round(n / t * 100) : 0;
+            var ap = t ? (100 - yp - np) : 0;
 
-            document.getElementById('totalNum').textContent = total;
+            document.getElementById('totalNum').textContent = t;
 
-            var yesPct = total ? Math.round(yes / total * 100) : 0;
-            var noPct = total ? Math.round(no / total * 100) : 0;
-            var abstainPct = total ? (100 - yesPct - noPct) : 0;
-
-            var html = ''
-                + '<div class="result-bar-group">'
-                + '  <div class="result-bar-label">'
-                + '    <span class="label">✅ 愿意购买</span>'
-                + '    <span><span class="pct">' + yesPct + '%</span><span class="count">(' + yes + '人)</span></span>'
-                + '  </div>'
-                + '  <div class="result-bar">'
-                + '    <div class="result-bar-fill yes" style="width:0%">'
-                + (yesPct > 5 ? '      <span>' + yesPct + '%</span>' : '')
-                + '    </div>'
-                + '  </div>'
+            var h = ''
+                + '<div class="bar-group">'
+                + '  <div class="bar-label"><span class="name">愿意买 👍</span><span class="stat"><span class="pct">' + yp + '%</span><span class="count">(' + y + '人)</span></span></div>'
+                + '  <div class="bar-track"><div class="bar-fill yes" id="bar1" style="width:0%">' + (yp > 8 ? '<span>' + yp + '%</span>' : '') + '</div></div>'
                 + '</div>'
-                + '<div class="result-bar-group">'
-                + '  <div class="result-bar-label">'
-                + '    <span class="label">❌ 暂不购买</span>'
-                + '    <span><span class="pct">' + noPct + '%</span><span class="count">(' + no + '人)</span></span>'
-                + '  </div>'
-                + '  <div class="result-bar">'
-                + '    <div class="result-bar-fill no" style="width:0%">'
-                + (noPct > 5 ? '      <span>' + noPct + '%</span>' : '')
-                + '    </div>'
-                + '  </div>'
+                + '<div class="bar-group">'
+                + '  <div class="bar-label"><span class="name">不需要 👋</span><span class="stat"><span class="pct">' + np + '%</span><span class="count">(' + n + '人)</span></span></div>'
+                + '  <div class="bar-track"><div class="bar-fill no" id="bar2" style="width:0%">' + (np > 8 ? '<span>' + np + '%</span>' : '') + '</div></div>'
                 + '</div>'
-                + '<div class="result-bar-group">'
-                + '  <div class="result-bar-label">'
-                + '    <span class="label">🤔 还在观望</span>'
-                + '    <span><span class="pct">' + abstainPct + '%</span><span class="count">(' + abstain + '人)</span></span>'
-                + '  </div>'
-                + '  <div class="result-bar">'
-                + '    <div class="result-bar-fill abstain" style="width:0%">'
-                + (abstainPct > 5 ? '      <span>' + abstainPct + '%</span>' : '')
-                + '    </div>'
-                + '  </div>'
+                + '<div class="bar-group">'
+                + '  <div class="bar-label"><span class="name">再看看 👀</span><span class="stat"><span class="pct">' + ap + '%</span><span class="count">(' + a + '人)</span></span></div>'
+                + '  <div class="bar-track"><div class="bar-fill abstain" id="bar3" style="width:0%">' + (ap > 8 ? '<span>' + ap + '%</span>' : '') + '</div></div>'
                 + '</div>';
 
-            document.getElementById('resultsContent').innerHTML = html;
+            document.getElementById('resultsContent').innerHTML = h;
 
-            // 延迟触发进度条动画
             requestAnimationFrame(function() {
                 setTimeout(function() {
-                    var bars = document.querySelectorAll('.result-bar-fill');
-                    if (bars[0]) bars[0].style.width = yesPct + '%';
-                    if (bars[1]) bars[1].style.width = noPct + '%';
-                    if (bars[2]) bars[2].style.width = abstainPct + '%';
-                }, 100);
+                    var b1 = document.getElementById('bar1');
+                    var b2 = document.getElementById('bar2');
+                    var b3 = document.getElementById('bar3');
+                    if (b1) b1.style.width = yp + '%';
+                    if (b2) b2.style.width = np + '%';
+                    if (b3) b3.style.width = ap + '%';
+                }, 80);
             });
         }).catch(function() {
-            document.getElementById('resultsContent').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-light);">数据加载失败，请稍后刷新</div>';
+            document.getElementById('resultsContent').innerHTML = '<div style="text-align:center;padding:16px;color:#999;">数据加载失败，请刷新重试</div>';
         });
     }
 
     function showToast(msg) {
-        var toast = document.getElementById('toast');
-        toast.textContent = msg;
-        toast.classList.add('show');
-        setTimeout(function() { toast.classList.remove('show'); }, 3000);
+        var t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(function() { t.classList.remove('show'); }, 2500);
     }
 </script>
 
