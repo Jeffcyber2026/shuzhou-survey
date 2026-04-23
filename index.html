@@ -517,59 +517,19 @@
     <div class="survey-section">
         <div class="survey-header">
             <h2>一个选择题</h2>
-            <p>匿名投票，不会收集任何个人信息</p>
+            <p>匿名投票，一秒钟搞定</p>
         </div>
 
-        <div id="voteCard" style="position:relative;">
-            <div class="vote-area">
-                <div class="vote-options" id="voteOptions">
-                    <div class="vote-option" data-choice="yes" onclick="pick(this)">
-                        <div class="dot"></div>
-                        <div class="opt-info">
-                            <div class="opt-title">愿意买</div>
-                            <div class="opt-desc">10块钱不贵，值得一试</div>
-                        </div>
-                        <div class="opt-emoji">👍</div>
-                    </div>
-                    <div class="vote-option" data-choice="no" onclick="pick(this)">
-                        <div class="dot"></div>
-                        <div class="opt-info">
-                            <div class="opt-title">不需要</div>
-                            <div class="opt-desc">暂时没有这方面的需求</div>
-                        </div>
-                        <div class="opt-emoji">👋</div>
-                    </div>
-                    <div class="vote-option" data-choice="abstain" onclick="pick(this)">
-                        <div class="dot"></div>
-                        <div class="opt-info">
-                            <div class="opt-title">再看看</div>
-                            <div class="opt-desc">想先了解一下具体内容</div>
-                        </div>
-                        <div class="opt-emoji">👀</div>
-                    </div>
-                </div>
-
-                <button class="submit-btn" id="submitBtn" onclick="submitVote()" disabled>提交选择</button>
-                <div class="vote-hint" id="hintText">点击上方选项</div>
-            </div>
-
-            <div class="loading-mask" id="loadingMask">
-                <div class="spin"></div>
-                <div style="font-size:12px;color:#888;">提交中…</div>
-            </div>
+        <div class="vote-area" style="text-align:center; padding: 24px 20px;">
+            <p style="font-size:15px;color:#444;line-height:1.8;margin-bottom:16px;">
+                如果我把这些书整理成PDF合集，标价10块钱，<br><strong>你愿意买吗？</strong>
+            </p>
+            <a href="https://wj.qq.com/s2/26442166/6229/" target="_blank" class="submit-btn" style="display:inline-block;text-decoration:none;max-width:320px;">
+                👉 点这里参与投票
+            </a>
+            <p style="font-size:12px;color:#999;margin-top:12px;">匿名投票，不会收集任何个人信息</p>
         </div>
 
-        <!-- 实时结果（始终可见） -->
-        <div class="results-area show" id="resultsArea">
-            <div class="results-title">实时投票结果</div>
-            <div id="resultsContent">
-                <div style="text-align:center;padding:16px;color:#bbb;">加载中…</div>
-            </div>
-            <div class="total-box">
-                <div class="big" id="totalNum">-</div>
-                <div class="small">人已参与投票</div>
-            </div>
-        </div>
     </div>
 
     <!-- 底部 -->
@@ -582,114 +542,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-    // CountAPI 配置
-    var NS = 'shuzhou-survey-2026';
-    var KEYS = { yes: 'vote-yes', no: 'vote-no', abstain: 'vote-abstain' };
-    var STORAGE = 'shuzhou_vote_2026';
-
-    function countHit(key) {
-        return fetch('https://api.countapi.xyz/hit/' + NS + '/' + key)
-            .then(function(r) { return r.json(); })
-            .catch(function() { return null; });
-    }
-    function countGet(key) {
-        return fetch('https://api.countapi.xyz/get/' + NS + '/' + key)
-            .then(function(r) { return r.json(); })
-            .catch(function() { return { value: 0 }; });
-    }
-
-    var choice = null;
-    var voted = false;
-
-    // 页面加载时立即拉取并展示实时结果
-    showResults();
-
-    // 已投过票的人隐藏投票选项
-    if (localStorage.getItem(STORAGE)) {
-        voted = true;
-        document.getElementById('voteCard').style.display = 'none';
-    }
-
-    function pick(el) {
-        if (voted) return;
-        var all = document.querySelectorAll('.vote-option');
-        for (var i = 0; i < all.length; i++) all[i].classList.remove('selected');
-        el.classList.add('selected');
-        choice = el.dataset.choice;
-        document.getElementById('submitBtn').disabled = false;
-        document.getElementById('hintText').textContent = '已选择：' + el.querySelector('.opt-title').textContent;
-    }
-
-    function submitVote() {
-        if (!choice) return;
-
-        document.getElementById('loadingMask').classList.add('show');
-        document.getElementById('submitBtn').disabled = true;
-
-        countHit(KEYS[choice]).then(function() {
-            voted = true;
-            localStorage.setItem(STORAGE, '1');
-            document.getElementById('loadingMask').classList.remove('show');
-            document.getElementById('voteCard').style.display = 'none';
-            showResults();
-            showToast('投票成功，感谢参与！');
-        });
-    }
-
-    function showResults() {
-        // resultsArea 始终可见，只刷新内容
-        Promise.all([
-            countGet(KEYS.yes),
-            countGet(KEYS.no),
-            countGet(KEYS.abstain)
-        ]).then(function(res) {
-            var y = Math.max(0, res[0].value || 0);
-            var n = Math.max(0, res[1].value || 0);
-            var a = Math.max(0, res[2].value || 0);
-            var t = y + n + a;
-            var yp = t ? Math.round(y / t * 100) : 0;
-            var np = t ? Math.round(n / t * 100) : 0;
-            var ap = t ? (100 - yp - np) : 0;
-
-            document.getElementById('totalNum').textContent = t;
-
-            var h = ''
-                + '<div class="bar-group">'
-                + '  <div class="bar-label"><span class="name">愿意买 👍</span><span class="stat"><span class="pct">' + yp + '%</span><span class="count">(' + y + '人)</span></span></div>'
-                + '  <div class="bar-track"><div class="bar-fill yes" id="bar1" style="width:0%">' + (yp > 8 ? '<span>' + yp + '%</span>' : '') + '</div></div>'
-                + '</div>'
-                + '<div class="bar-group">'
-                + '  <div class="bar-label"><span class="name">不需要 👋</span><span class="stat"><span class="pct">' + np + '%</span><span class="count">(' + n + '人)</span></span></div>'
-                + '  <div class="bar-track"><div class="bar-fill no" id="bar2" style="width:0%">' + (np > 8 ? '<span>' + np + '%</span>' : '') + '</div></div>'
-                + '</div>'
-                + '<div class="bar-group">'
-                + '  <div class="bar-label"><span class="name">再看看 👀</span><span class="stat"><span class="pct">' + ap + '%</span><span class="count">(' + a + '人)</span></span></div>'
-                + '  <div class="bar-track"><div class="bar-fill abstain" id="bar3" style="width:0%">' + (ap > 8 ? '<span>' + ap + '%</span>' : '') + '</div></div>'
-                + '</div>';
-
-            document.getElementById('resultsContent').innerHTML = h;
-
-            requestAnimationFrame(function() {
-                setTimeout(function() {
-                    var b1 = document.getElementById('bar1');
-                    var b2 = document.getElementById('bar2');
-                    var b3 = document.getElementById('bar3');
-                    if (b1) b1.style.width = yp + '%';
-                    if (b2) b2.style.width = np + '%';
-                    if (b3) b3.style.width = ap + '%';
-                }, 80);
-            });
-        }).catch(function() {
-            document.getElementById('resultsContent').innerHTML = '<div style="text-align:center;padding:16px;color:#999;">数据加载失败，请刷新重试</div>';
-        });
-    }
-
-    function showToast(msg) {
-        var t = document.getElementById('toast');
-        t.textContent = msg;
-        t.classList.add('show');
-        setTimeout(function() { t.classList.remove('show'); }, 2500);
-    }
+    // 投票链接跳转，无需前端逻辑
 </script>
 
 </body>
