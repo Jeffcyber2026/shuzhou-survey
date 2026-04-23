@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>书宙漫游 · 电子书合集意愿调查</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #fdf6e3;
+    --paper-deep: #f5ead0;
+    --amber: #c8860a;
+    --amber-light: #e8a822;
+    --rust: #8b3a0f;
+    --mist: #7a6e5e;
+    --seal: #c0392b;
+    --green: #2e7d32;
+    --line: rgba(100,80,40,0.18);
+    --shadow: rgba(60,30,5,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    min-height: 100vh;
+    background-color: var(--paper);
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 29px,
+        var(--line) 29px,
+        var(--line) 30px
+      );
+    font-family: 'Noto Serif SC', serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--paper);
+    position: relative;
+    box-shadow: 0 0 40px var(--shadow);
+  }
+
+  /* ── 顶部 ── */
+  .header-band {
+    background: var(--ink);
+    padding: 28px 24px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-band::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--amber), var(--amber-light), var(--amber));
+  }
+  .header-band::after {
+    content: '書';
+    position: absolute;
+    right: -10px; top: -20px;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 160px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--amber);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+  .header-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 30px;
+    color: #fff;
+    line-height: 1.3;
+    letter-spacing: 3px;
+  }
+  .header-sub {
+    margin-top: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 1px;
+  }
+  .bookmark {
+    position: absolute;
+    right: 28px; top: 0;
+    width: 28px; height: 60px;
+    background: var(--seal);
+    clip-path: polygon(0 0,100% 0,100% 100%,50% 80%,0 100%);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 8px;
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+  }
+
+  /* ── 表单内容 ── */
+  .content { padding: 28px 24px 40px; }
+
+  .product-card {
+    background: var(--paper-deep);
+    border: 1.5px solid rgba(120,90,40,0.25);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 28px;
+    position: relative;
+    animation: fadeSlide 0.6s ease both;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--amber), var(--rust));
+    border-radius: 4px 0 0 4px;
+  }
+  .product-name { font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: 1px; margin-bottom: 10px; padding-left: 10px; }
+  .product-desc { font-size: 13px; color: var(--mist); line-height: 2; padding-left: 10px; }
+  .product-price { display: inline-flex; align-items: baseline; gap: 3px; margin-top: 14px; padding-left: 10px; }
+  .price-label  { font-size: 12px; color: var(--mist); }
+  .price-num    { font-family: 'Ma Shan Zheng', cursive; font-size: 36px; color: var(--seal); line-height: 1; }
+  .price-unit   { font-size: 14px; color: var(--mist); margin-left: 2px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-left: 10px; }
+  .tag  { font-size: 11px; padding: 3px 8px; border-radius: 2px; letter-spacing: 1px; }
+  .tag-amber { background: rgba(200,134,10,0.12); color: var(--amber); border: 1px solid rgba(200,134,10,0.3); }
+  .tag-ink   { background: rgba(26,18,8,0.07);   color: var(--mist);  border: 1px solid rgba(26,18,8,0.15); }
+
+  .section-label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--mist); letter-spacing: 2px; margin-bottom: 20px;
+  }
+  .section-label::before,.section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  .question-block { margin-bottom: 26px; animation: fadeSlide 0.7s ease both; }
+  .question-block:nth-child(2) { animation-delay: 0.08s; }
+  .question-block:nth-child(3) { animation-delay: 0.16s; }
+  .question-block:nth-child(4) { animation-delay: 0.24s; }
+  .question-block:nth-child(5) { animation-delay: 0.32s; }
+
+  .q-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    background: var(--ink); color: var(--amber);
+    font-size: 11px; border-radius: 50%; margin-right: 8px; flex-shrink: 0;
+  }
+  .q-title {
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    line-height: 1.6; display: flex; align-items: flex-start; margin-bottom: 14px;
+  }
+  .q-title-text { flex: 1; }
+  .required { color: var(--seal); margin-left: 3px; font-size: 13px; }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px;
+    border: 1.5px solid rgba(120,90,40,0.2);
+    border-radius: 4px; cursor: pointer;
+    background: var(--paper);
+    transition: all 0.2s ease;
+    position: relative; overflow: hidden;
+  }
+  .option-item:hover { border-color: var(--amber); background: rgba(200,134,10,0.04); }
+  .option-item.selected { border-color: var(--amber); background: rgba(200,134,10,0.08); }
+  .option-item.selected::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--amber);
+  }
+  .radio-circle {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(120,90,40,0.35); border-radius: 50%;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .option-item.selected .radio-circle { border-color: var(--amber); background: var(--amber); }
+  .radio-dot {
+    width: 7px; height: 7px; background: #fff; border-radius: 50%;
+    opacity: 0; transform: scale(0); transition: all 0.2s;
+  }
+  .option-item.selected .radio-dot { opacity: 1; transform: scale(1); }
+  .checkbox-sq {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(120,90,40,0.35); border-radius: 3px;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-size: 11px; color: transparent;
+  }
+  .option-item.selected .checkbox-sq { border-color: var(--amber); background: var(--amber); color: #fff; }
+  .option-text  { font-size: 14px; color: var(--ink); line-height: 1.4; flex: 1; }
+  .option-emoji { font-size: 16px; flex-shrink: 0; }
+
+  .text-input {
+    width: 100%; background: var(--paper);
+    border: 1.5px solid rgba(120,90,40,0.2); border-radius: 4px;
+    padding: 12px 14px; font-family: 'Noto Serif SC', serif;
+    font-size: 14px; color: var(--ink); resize: vertical;
+    transition: border-color 0.2s; outline: none; min-height: 90px;
+  }
+  .text-input::placeholder { color: rgba(120,90,40,0.35); }
+  .text-input:focus { border-color: var(--amber); }
+
+  .submit-wrap {
+    margin-top: 32px; padding-top: 24px;
+    border-top: 1px dashed rgba(120,90,40,0.25); text-align: center;
+  }
+  .btn-submit {
+    display: inline-block; background: var(--ink); color: var(--amber);
+    font-family: 'Ma Shan Zheng', cursive; font-size: 18px; letter-spacing: 4px;
+    padding: 14px 48px; border: none; border-radius: 3px; cursor: pointer;
+    position: relative; overflow: hidden; transition: transform 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-submit::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    transition: left 0.4s ease;
+  }
+  .btn-submit:hover::before { left: 100%; }
+  .btn-submit:active { transform: scale(0.97); }
+  .btn-submit:disabled { background: rgba(26,18,8,0.4); color: rgba(200,134,10,0.5); cursor: not-allowed; }
+  .hint-text { margin-top: 12px; font-size: 12px; color: var(--mist); letter-spacing: 1px; }
+
+  /* ── 成功页 ── */
+  .success-view {
+    display: none; flex-direction: column; align-items: center;
+    padding: 48px 24px 60px;
+    animation: fadeSlide 0.5s ease both;
+  }
+  .success-view.show { display: flex; }
+
+  .seal-stamp {
+    width: 90px; height: 90px;
+    border: 4px solid var(--seal); border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin-bottom: 24px; color: var(--seal); transform: rotate(-8deg); position: relative;
+  }
+  .seal-stamp::before {
+    content: ''; position: absolute; inset: 5px;
+    border: 1.5px solid var(--seal); border-radius: 4px; opacity: 0.4;
+  }
+  .seal-big   { font-family: 'Ma Shan Zheng', cursive; font-size: 34px; line-height: 1; }
+  .seal-small { font-size: 10px; letter-spacing: 2px; margin-top: 4px; }
+
+  .success-title {
+    font-family: 'Ma Shan Zheng', cursive; font-size: 26px;
+    color: var(--ink); letter-spacing: 3px; margin-bottom: 10px;
+  }
+  .success-desc {
+    font-size: 14px; color: var(--mist); line-height: 2;
+    max-width: 300px; text-align: center; margin-bottom: 32px;
+  }
+
+  /* ── 投票统计区 ── */
+  .vote-board {
+    width: 100%; max-width: 340px;
+    background: var(--paper-deep);
+    border: 1.5px solid rgba(120,90,40,0.22);
+    border-radius: 6px;
+    padding: 20px 20px 16px;
+    margin-bottom: 24px;
+  }
+  .vote-board-title {
+    font-size: 13px; letter-spacing: 2px;
+    color: var(--mist); text-align: center; margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .vote-board-title::before,
+  .vote-board-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  .vote-row { margin-bottom: 13px; }
+  .vote-row:last-child { margin-bottom: 0; }
+
+  .vote-label {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 5px;
+  }
+  .vote-label-text { font-size: 13px; color: var(--ink); }
+  .vote-pct {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 18px; line-height: 1;
+  }
+  .pct-yes   { color: var(--green); }
+  .pct-maybe { color: var(--amber); }
+  .pct-no    { color: var(--mist);  }
+
+  .vote-bar-bg {
+    height: 8px; background: rgba(120,90,40,0.12);
+    border-radius: 4px; overflow: hidden;
+  }
+  .vote-bar-fill {
+    height: 100%; border-radius: 4px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .fill-yes   { background: linear-gradient(90deg, #43a047, #66bb6a); }
+  .fill-maybe { background: linear-gradient(90deg, var(--amber), var(--amber-light)); }
+  .fill-no    { background: linear-gradient(90deg, #9e9e9e, #bdbdbd); }
+
+  .vote-total {
+    text-align: center; margin-top: 14px;
+    font-size: 12px; color: var(--mist); letter-spacing: 1px;
+  }
+  .vote-total strong { color: var(--amber); font-size: 14px; }
+
+  .vote-loading {
+    text-align: center; padding: 18px 0;
+    font-size: 13px; color: var(--mist); letter-spacing: 1px;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+  }
+
+  .success-name {
+    margin-top: 8px; font-size: 13px;
+    color: rgba(120,90,40,0.5); letter-spacing: 2px;
+  }
+
+  /* ── 底部 ── */
+  .footer {
+    text-align: center; padding: 20px 24px;
+    border-top: 1px solid var(--line);
+    font-size: 11px; color: rgba(120,90,40,0.4); letter-spacing: 1px;
+  }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @supports(padding: max(0px)) {
+    .page-wrap { padding-bottom: env(safe-area-inset-bottom); }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- 顶部 -->
+  <div class="header-band">
+    <div class="bookmark">📖</div>
+    <div class="badge">书宙漫游 · 读者调查</div>
+    <div class="header-title">电子书合集<br>意向问卷</div>
+    <div class="header-sub">诚邀您花 1 分钟，留下宝贵意见</div>
+  </div>
+
+  <!-- 表单 -->
+  <div id="formView">
+    <div class="content">
+
+      <!-- 产品卡 -->
+      <div class="product-card">
+        <div class="product-name">📚 100本精选 PDF 电子合集</div>
+        <div class="product-desc">
+          涵盖人文、科学、历史、商业等领域<br>
+          百度网盘一键下载 · 永久保存
+        </div>
+        <div class="tags">
+          <span class="tag tag-amber">100 本精选好书</span>
+          <span class="tag tag-ink">百度网盘下载</span>
+          <span class="tag tag-ink">PDF 高清格式</span>
+        </div>
+        <div class="product-price">
+          <span class="price-label">限时仅</span>
+          <span class="price-num">10</span>
+          <span class="price-unit">元</span>
+        </div>
+      </div>
+
+      <div class="section-label">意向调查</div>
+
+      <!-- Q1 购买意向 -->
+      <div class="question-block">
+        <div class="q-title">
+          <span class="q-num">1</span>
+          <span class="q-title-text">您是否愿意以 <strong>10元</strong> 购买这套 100 本 PDF 电子合集？<span class="required">*</span></span>
+        </div>
+        <div class="options" id="q1">
+          <div class="option-item" data-group="q1" data-val="yes" onclick="selectRadio(this)">
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+            <span class="option-emoji">✅</span>
+            <span class="option-text">愿意购买，10元完全可以接受</span>
+          </div>
+          <div class="option-item" data-group="q1" data-val="maybe" onclick="selectRadio(this)">
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+            <span class="option-emoji">🤔</span>
+            <span class="option-text">有兴趣，但想先了解更多内容</span>
+          </div>
+          <div class="option-item" data-group="q1" data-val="no" onclick="selectRadio(this)">
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+            <span class="option-emoji">❌</span>
+            <span class="option-text">暂不考虑购买</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 书类 -->
+      <div class="question-block">
+        <div class="q-title">
+          <span class="q-num">2</span>
+          <span class="q-title-text">您最希望合集里包含哪类书籍？（可多选）</span>
+        </div>
+        <div class="options" id="q2">
+          <div class="option-item" data-group="q2" data-val="human"   onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">🏛</span><span class="option-text">人文历史 / 哲学社科</span></div>
+          <div class="option-item" data-group="q2" data-val="science" onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">🔬</span><span class="option-text">自然科学 / 科普读物</span></div>
+          <div class="option-item" data-group="q2" data-val="biz"     onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">💼</span><span class="option-text">商业管理 / 职场提升</span></div>
+          <div class="option-item" data-group="q2" data-val="tech"    onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">💻</span><span class="option-text">科技 / 编程 / AI</span></div>
+          <div class="option-item" data-group="q2" data-val="lit"     onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">📖</span><span class="option-text">文学经典 / 小说散文</span></div>
+          <div class="option-item" data-group="q2" data-val="self"    onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">🧘</span><span class="option-text">心理 / 个人成长</span></div>
+        </div>
+      </div>
+
+      <!-- Q3 设备 -->
+      <div class="question-block">
+        <div class="q-title">
+          <span class="q-num">3</span>
+          <span class="q-title-text">您通常在哪里阅读电子书？（可多选）</span>
+        </div>
+        <div class="options" id="q3">
+          <div class="option-item" data-group="q3" data-val="phone" onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">📱</span><span class="option-text">手机（微信阅读 / 本地 PDF）</span></div>
+          <div class="option-item" data-group="q3" data-val="pc"    onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">💻</span><span class="option-text">电脑</span></div>
+          <div class="option-item" data-group="q3" data-val="pad"   onclick="selectCheck(this)"><div class="checkbox-sq">✓</div><span class="option-emoji">📟</span><span class="option-text">平板 / 阅读器（Kindle 等）</span></div>
+        </div>
+      </div>
+
+      <!-- Q4 定价 -->
+      <div class="question-block">
+        <div class="q-title">
+          <span class="q-num">4</span>
+          <span class="q-title-text">您觉得 10元/100本 的定价如何？<span class="required">*</span></span>
+        </div>
+        <div class="options" id="q4">
+          <div class="option-item" data-group="q4" data-val="cheap" onclick="selectRadio(this)"><div class="radio-circle"><div class="radio-dot"></div></div><span class="option-emoji">🎉</span><span class="option-text">非常划算，超出预期</span></div>
+          <div class="option-item" data-group="q4" data-val="ok"    onclick="selectRadio(this)"><div class="radio-circle"><div class="radio-dot"></div></div><span class="option-emoji">👍</span><span class="option-text">合理，可以接受</span></div>
+          <div class="option-item" data-group="q4" data-val="high"  onclick="selectRadio(this)"><div class="radio-circle"><div class="radio-dot"></div></div><span class="option-emoji">💬</span><span class="option-text">感觉偏高，希望更便宜</span></div>
+          <div class="option-item" data-group="q4" data-val="free"  onclick="selectRadio(this)"><div class="radio-circle"><div class="radio-dot"></div></div><span class="option-emoji">🙏</span><span class="option-text">希望免费提供</span></div>
+        </div>
+      </div>
+
+      <!-- Q5 留言 -->
+      <div class="question-block">
+        <div class="q-title">
+          <span class="q-num">5</span>
+          <span class="q-title-text">还有什么想对我们说的？（选填）</span>
+        </div>
+        <textarea class="text-input" id="comment" placeholder="您的建议、期望的书单，或任何想法…"></textarea>
+      </div>
+
+      <div class="submit-wrap">
+        <button class="btn-submit" id="submitBtn" onclick="submitForm()">提交问卷</button>
+        <div class="hint-text">感谢您的参与 · 提交后可查看实时投票结果</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成功页 -->
+  <div class="success-view" id="successView">
+    <div class="seal-stamp">
+      <div class="seal-big">收</div>
+      <div class="seal-small">书宙漫游</div>
+    </div>
+    <div class="success-title">感谢您的反馈</div>
+    <div class="success-desc">
+      您的意见已收到！来看看大家的购买意愿吧 👇<br>
+      关注「书宙漫游」第一时间获取上架通知 📚
+    </div>
+
+    <!-- 实时投票统计 -->
+    <div class="vote-board" id="voteBoard">
+      <div class="vote-board-title">实时投票结果</div>
+      <div class="vote-loading" id="voteLoading">正在加载数据…</div>
+      <div id="voteData" style="display:none;">
+        <!-- yes -->
+        <div class="vote-row">
+          <div class="vote-label">
+            <span class="vote-label-text">✅ 愿意购买</span>
+            <span class="vote-pct pct-yes" id="pctYes">0%</span>
+          </div>
+          <div class="vote-bar-bg"><div class="vote-bar-fill fill-yes" id="barYes"></div></div>
+        </div>
+        <!-- maybe -->
+        <div class="vote-row">
+          <div class="vote-label">
+            <span class="vote-label-text">🤔 有兴趣，再了解</span>
+            <span class="vote-pct pct-maybe" id="pctMaybe">0%</span>
+          </div>
+          <div class="vote-bar-bg"><div class="vote-bar-fill fill-maybe" id="barMaybe"></div></div>
+        </div>
+        <!-- no -->
+        <div class="vote-row">
+          <div class="vote-label">
+            <span class="vote-label-text">❌ 暂不考虑</span>
+            <span class="vote-pct pct-no" id="pctNo">0%</span>
+          </div>
+          <div class="vote-bar-bg"><div class="vote-bar-fill fill-no" id="barNo"></div></div>
+        </div>
+        <div class="vote-total">共 <strong id="totalVotes">0</strong> 人参与投票</div>
+      </div>
+    </div>
+
+    <div class="success-name">— 书宙漫游 —</div>
+  </div>
+
+  <div class="footer">© 书宙漫游 · 本调查仅用于产品规划参考</div>
+</div>
+
+<script>
+  // ── CountAPI 命名空间（用仓库名隔离，避免与他人冲突）
+  const NS   = 'shuzhou-survey-2026';
+  const KEYS = { yes: 'q1-yes', maybe: 'q1-maybe', no: 'q1-no' };
+
+  // CountAPI 封装 —— 使用 api.countapi.xyz
+  function countHit(key) {
+    return fetch(`https://api.countapi.xyz/hit/${NS}/${key}`)
+      .then(r => r.json()).catch(() => ({ value: null }));
+  }
+  function countGet(key) {
+    return fetch(`https://api.countapi.xyz/get/${NS}/${key}`)
+      .then(r => r.json()).catch(() => ({ value: null }));
+  }
+
+  // ── 单选 / 多选
+  function selectRadio(el) {
+    const g = el.dataset.group;
+    document.querySelectorAll(`[data-group="${g}"]`).forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function selectCheck(el) { el.classList.toggle('selected'); }
+
+  // ── 提交
+  async function submitForm() {
+    const q1el = document.querySelector('#q1 .selected');
+    const q4el = document.querySelector('#q4 .selected');
+    if (!q1el) { showToast('请回答第 1 题'); document.getElementById('q1').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    if (!q4el) { showToast('请回答第 4 题'); document.getElementById('q4').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = '提交中…';
+
+    const choice = q1el.dataset.val; // yes / maybe / no
+
+    // 写入计数
+    await countHit(KEYS[choice]);
+
+    // 切换成功页
+    document.getElementById('formView').style.display = 'none';
+    const sv = document.getElementById('successView');
+    sv.style.display = 'flex'; sv.classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // 加载所有数据
+    loadVoteStats();
+  }
+
+  // ── 加载并渲染统计
+  async function loadVoteStats() {
+    try {
+      const [rYes, rMaybe, rNo] = await Promise.all([
+        countGet(KEYS.yes),
+        countGet(KEYS.maybe),
+        countGet(KEYS.no)
+      ]);
+
+      const yes   = Math.max(0, rYes.value   || 0);
+      const maybe = Math.max(0, rMaybe.value || 0);
+      const no    = Math.max(0, rNo.value    || 0);
+      const total = yes + maybe + no;
+
+      document.getElementById('voteLoading').style.display = 'none';
+      document.getElementById('voteData').style.display    = 'block';
+      document.getElementById('totalVotes').textContent = total;
+
+      const pct = (n) => total === 0 ? '0%' : Math.round(n / total * 100) + '%';
+      const w   = (n) => total === 0 ? '0%' : (n / total * 100).toFixed(1) + '%';
+
+      document.getElementById('pctYes').textContent   = pct(yes);
+      document.getElementById('pctMaybe').textContent = pct(maybe);
+      document.getElementById('pctNo').textContent    = pct(no);
+
+      // 延迟触发动画
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          document.getElementById('barYes').style.width   = w(yes);
+          document.getElementById('barMaybe').style.width = w(maybe);
+          document.getElementById('barNo').style.width    = w(no);
+        }, 100);
+      });
+    } catch (e) {
+      document.getElementById('voteLoading').textContent = '数据加载失败，请稍后刷新查看';
+    }
+  }
+
+  // ── Toast
+  function showToast(msg) {
+    const old = document.getElementById('toast');
+    if (old) old.remove();
+    const t = document.createElement('div');
+    t.id = 'toast'; t.textContent = msg;
+    Object.assign(t.style, {
+      position:'fixed', bottom:'40px', left:'50%',
+      transform:'translateX(-50%)',
+      background:'rgba(26,18,8,0.88)', color:'#e8a822',
+      padding:'10px 20px', borderRadius:'4px',
+      fontSize:'13px', letterSpacing:'1px',
+      zIndex:999, whiteSpace:'nowrap'
+    });
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2200);
+  }
+</script>
+</body>
+</html>
